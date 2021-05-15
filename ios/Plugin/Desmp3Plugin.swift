@@ -9,10 +9,33 @@ import Capacitor
 public class Desmp3Plugin: CAPPlugin {
     private let implementation = Desmp3()
 
-    @objc func echo(_ call: CAPPluginCall) {
+    @objc func start(_ call: CAPPluginCall)  -> String {
+        let value = call.getString("value") ?? ""
+        call.resolve([
+            "value": implementation.start(value: value)
+        ])
+        return "yes"
+    }
+
+        @objc func pause(_ call: CAPPluginCall)  -> String {
+                call.resolve([
+                    "value": implementation.pause()
+                ])
+              return "yes"
+    }
+      
+    @objc func stop(_ call: CAPPluginCall)  -> String {
+                call.resolve([
+                    "value": implementation.stop()
+                ])
+          return "yes"
+}
+        @objc func echo(_ call: CAPPluginCall)  -> String {
         let value = call.getString("value") ?? ""
         call.resolve([
             "value": implementation.echo(value)
         ])
+            return "yes"
     }
+
 }
