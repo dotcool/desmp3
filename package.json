@@ -1,6 +1,6 @@
 {
   "name": "desmp3",
-  "version": "0.0.20",
+  "version": "0.0.26",
   "description": "desmp3 plugin",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",

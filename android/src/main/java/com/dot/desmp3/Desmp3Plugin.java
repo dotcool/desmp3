@@ -1,19 +1,15 @@
 package com.dot.desmp3;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.util.Log;
+
 
 import com.getcapacitor.JSObject;
-import com.getcapacitor.PermissionState;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
-import com.getcapacitor.annotation.PermissionCallback;
 
 @CapacitorPlugin(name = "Desmp3")
-public class Desmp3Plugin extends Plugin {
+public class Desmp3Plugin extends Plugin implements onCompletedListener {
 
     private Desmp3 implementation = new Desmp3();
     @PluginMethod
@@ -21,9 +17,10 @@ public class Desmp3Plugin extends Plugin {
 
         String value = call.getString("value");
         JSObject ret = new JSObject();
-        implementation.setup(this.getContext());
-        ret.put("value", implementation.start(value));
+        implementation.setup(this);
+        ret.put("value", implementation.start(call,value));
         call.resolve(ret);
+
         return "yes";
     }
 
@@ -55,4 +52,8 @@ public class Desmp3Plugin extends Plugin {
         call.resolve(ret);
     }
 
+    @Override
+    public void onCompleted() {
+        notifyListeners("nextSong", null);
+    }
 }
